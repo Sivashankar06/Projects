@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FoodApp</string>
+
+    <string name="find_restaurants">Find Restaurants</string>
+
+    <string name="locate">Locate Me</string>
+    <string name="search">Search</string>
+    <string name="city">City</string>
+    <string name="location">Location</string>
+
+</resources>
