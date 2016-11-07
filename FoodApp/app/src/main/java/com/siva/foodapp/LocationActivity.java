@@ -1,5 +1,6 @@
 package com.siva.foodapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -49,6 +50,8 @@ public class LocationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                mCityHolder.setError("Whats up?");
+                Intent intent = new Intent(LocationActivity.this,RestaurantsActivity.class);
+                startActivity(intent);
             }
         });
 
