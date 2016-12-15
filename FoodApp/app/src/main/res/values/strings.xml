@@ -11,6 +11,9 @@
     <string name="restaurants">Restaurants</string>
     <string name="orders">Orders</string>
     <string name="info">Info</string>
+    <string name="licence">Licence</string>
+    <string name="terms">Terms &amp; Conditions</string>
+
     <string name="open">Open</string>
     <string name="close">close</string>
 

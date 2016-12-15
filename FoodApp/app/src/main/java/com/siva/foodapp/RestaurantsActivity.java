@@ -1,5 +1,6 @@
 package com.siva.foodapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -44,6 +45,15 @@ public class RestaurantsActivity extends AppCompatActivity {
         mRestaurantListView = (RecyclerView) findViewById(R.id.restaurant_list);
         mRestaurantDataModels = ResponseMock.getRestaurantsDetails();
         mRestaurantAdapter = new RestaurantAdapter(this, mRestaurantDataModels);
+        mRestaurantAdapter.setItemClickListener(new RestaurantAdapter.ItemClickListener() {
+            @Override
+            public void onSelectingRestaurant(RestaurantDataModel data) {
+                Toast.makeText(RestaurantsActivity.this,"Selected : "+data.getRestaurantName(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RestaurantsActivity.this, RestaurantDetailsActivity.class);
+                intent.putExtra(RestaurantDetailsActivity.EXTRA,data);
+                startActivity(intent);
+            }
+        });
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRestaurantListView.setLayoutManager(mLayoutManager);
@@ -52,9 +62,7 @@ public class RestaurantsActivity extends AppCompatActivity {
 //        recyclerView.setItemAnimator(new DefaultItemAnimator());
         mRestaurantListView.setAdapter(mRestaurantAdapter);
 
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-
 
         //Initializing NavigationView
         mNavigationView = (NavigationView) findViewById(R.id.drawer_list);
@@ -76,7 +84,6 @@ public class RestaurantsActivity extends AppCompatActivity {
 
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
-
 
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.restaurants:

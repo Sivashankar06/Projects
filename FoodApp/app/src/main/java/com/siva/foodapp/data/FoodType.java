@@ -1,9 +1,11 @@
 package com.siva.foodapp.data;
 
+import java.io.Serializable;
+
 /**
  * Created by sarumugam on 07/11/16.
  */
-public class FoodType {
+public class FoodType implements Serializable{
 
     private String mDishName;
     private int mNumberOfItems;

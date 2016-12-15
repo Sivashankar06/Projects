@@ -38,4 +38,12 @@ public class ResponseMock {
         }
         return data;
     }
+
+    public static String[] getAvailableDishes(){
+        String[] shops = new String[25];
+        for (int i = 0; i < 25; i++) {
+            shops[i] = "Dish"+" : "+(i+1);
+        }
+        return shops;
+    }
 }

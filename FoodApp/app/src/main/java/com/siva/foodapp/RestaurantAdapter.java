@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.siva.foodapp.data.RestaurantDataModel;
 
@@ -19,12 +18,21 @@ import java.util.List;
  */
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
 
+    public interface ItemClickListener {
+        void onSelectingRestaurant(RestaurantDataModel data);
+    }
+
     private Context mContext;
     private List<RestaurantDataModel> mDatas;
+    private ItemClickListener mItemClickListener;
 
     public RestaurantAdapter(Context context, List<RestaurantDataModel> datas) {
         this.mContext = context;
         this.mDatas = datas;
+    }
+
+    public void setItemClickListener(ItemClickListener listener){
+        mItemClickListener = listener;
     }
 
     @Override
@@ -34,8 +42,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        RestaurantDataModel data = mDatas.get(position);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final RestaurantDataModel data = mDatas.get(position);
         holder.mNameText.setText(data.getRestaurantName());
         holder.mDeliveryTimeText.setText("Delivery Time : "+data.getTimeToDeliver());
         holder.mFoodTypeText.setText(data.getDisplayFoodType());
@@ -45,7 +53,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext,"Postion is : "+holder.getAdapterPosition(),Toast.LENGTH_SHORT).show();
+                mItemClickListener.onSelectingRestaurant(data);
             }
         });
     }

@@ -19,5 +19,16 @@
             android:icon="@drawable/ic_menu_back"
             android:title="@string/info" />
 
+        <item
+            android:id="@+id/terms"
+            android:checked="false"
+            android:icon="@drawable/ic_menu_back"
+            android:title="@string/terms" />
+
+        <item
+            android:id="@+id/licence"
+            android:checked="false"
+            android:icon="@drawable/ic_menu_back"
+            android:title="@string/licence" />
     </group>
 </menu>

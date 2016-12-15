@@ -21,6 +21,8 @@
 
         <activity android:name=".RestaurantsActivity" android:theme="@style/LocateTheme" android:screenOrientation="portrait"/>
 
+        <activity android:name=".RestaurantDetailsActivity" android:theme="@style/LocateTheme" android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

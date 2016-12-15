@@ -2,12 +2,13 @@ package com.siva.foodapp.data;
 
 import android.text.TextUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by sarumugam on 07/11/16.
  */
-public class RestaurantDataModel {
+public class RestaurantDataModel implements Serializable {
 
     private String mRestaurantName;
     private String mRestaurantPicUrl;
