@@ -9,7 +9,7 @@
         android:id="@+id/profile_image"
         android:layout_width="76dp"
         android:layout_height="76dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/gmfprofileimage"
         app:border_color="@color/black"
         android:layout_marginLeft="24dp"
         android:layout_centerVertical="true"
