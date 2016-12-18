@@ -22,6 +22,7 @@ public class LocationActivity extends AppCompatActivity {
     private MultiAutoCompleteTextView mCityBox,mLocationBox;
     private Button mLocateButton;
     private ImageView mNavigateBackButton;
+    private String mAddress;
 
     private ArrayAdapter<String> mLocationAdapter;
     private ArrayAdapter<String> mCitiesAdapter;
@@ -34,6 +35,16 @@ public class LocationActivity extends AppCompatActivity {
         initializeViews();
         initializeListeners();
         setUpSuggestion();
+
+        Intent myIntent = getIntent(); // gets the previously created intent
+        String firstKeyName = myIntent.getStringExtra("City"); // will return "FirstKeyValue"
+        String secondKeyName= myIntent.getStringExtra("Area");
+        mAddress = myIntent.getStringExtra("Address");
+
+        if((null != secondKeyName) || (null != firstKeyName)) {
+            mLocationBox.setText(secondKeyName);
+            mCityBox.setText(firstKeyName);
+        }
     }
 
     private void initializeViews() {
@@ -51,6 +62,7 @@ public class LocationActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                mCityHolder.setError("Whats up?");
                 Intent intent = new Intent(LocationActivity.this,RestaurantsActivity.class);
+                intent.putExtra("Address", mAddress);
                 startActivity(intent);
             }
         });
