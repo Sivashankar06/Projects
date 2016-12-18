@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/account"
+            android:checked="false"
+            android:icon="@drawable/ic_menu_back"
+            android:title="Account" />
+
+        <item
             android:id="@+id/restaurants"
             android:checked="false"
             android:icon="@drawable/ic_menu_back"
@@ -12,6 +18,18 @@
             android:checked="false"
             android:icon="@drawable/ic_menu_back"
             android:title="@string/orders" />
+
+        <item
+        android:id="@+id/address"
+        android:checked="false"
+        android:icon="@drawable/ic_menu_back"
+        android:title="Address" />
+
+        <item
+        android:id="@+id/settings"
+        android:checked="false"
+        android:icon="@drawable/ic_menu_back"
+        android:title="Settings" />
 
         <item
             android:id="@+id/info"
