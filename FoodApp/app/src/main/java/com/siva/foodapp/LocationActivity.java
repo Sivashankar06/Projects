@@ -20,7 +20,7 @@ public class LocationActivity extends AppCompatActivity {
 
     private TextInputLayout mCityHolder,mLocationHolder;
     private MultiAutoCompleteTextView mCityBox,mLocationBox;
-    private Button mLocateButton;
+    private Button mLocateButton, mSearchButton;
     private ImageView mNavigateBackButton;
     private String mAddress;
 
@@ -52,21 +52,31 @@ public class LocationActivity extends AppCompatActivity {
         mLocationHolder = (TextInputLayout) findViewById(R.id.location_box_holder);
         mCityBox = (MultiAutoCompleteTextView) findViewById(R.id.city_box);
         mLocationBox = (MultiAutoCompleteTextView) findViewById(R.id.location_box);
+        mSearchButton = (Button) findViewById(R.id.search_button);
         mLocateButton = (Button) findViewById(R.id.locate_button);
         mNavigateBackButton = (ImageView) findViewById(R.id.navigate_back);
     }
 
     private void initializeListeners(){
-        mLocateButton.setOnClickListener(new View.OnClickListener() {
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mCityHolder.setError("Whats up?");
                 Intent intent = new Intent(LocationActivity.this,RestaurantsActivity.class);
                 intent.putExtra("Address", mAddress);
                 startActivity(intent);
             }
         });
 
+        mLocateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LocationActivity.this,LauncherActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        //Siva : Do we need this ?, I have added a locate button
         mNavigateBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

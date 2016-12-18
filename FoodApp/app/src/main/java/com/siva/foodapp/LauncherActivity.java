@@ -70,7 +70,7 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
             enableGPS();
         } else {
             isPermissionProvided = false;
-            goToNextActivity(null, null);
+            goToNextActivity(null, null, null);
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -120,7 +120,7 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
                         public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
                             isGPSEnabled = false;
                             dialog.cancel();
-                            goToNextActivity(null, null);
+                            goToNextActivity(null, null, null);
                         }
                     });
             final AlertDialog alert = builder.create();
@@ -143,7 +143,7 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
                     getLocationAddress();
                 } else {
                     isGPSEnabled = false;
-                    goToNextActivity(locality, mSubLocality);
+                    goToNextActivity(locality, mSubLocality, locationAddress);
 
                 }
             }
@@ -187,7 +187,7 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
                 }
                 if(null != locationManager)
                     locationManager.removeUpdates(LauncherActivity.this);
-                goToNextActivity(locality, mSubLocality);
+                goToNextActivity(locality, mSubLocality, locationAddress);
             }
         }, delayInMillis);
 
@@ -196,16 +196,11 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
                 Log.e("TAG", "Pavan Location access is not present ");
                 return false;
             }
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (location != null) {
-                Log.e("TAG", "Pavan GPS is on here");
-                AddressFromLocation.getAddressFromLocation(location.getLatitude(), location.getLongitude(), getApplicationContext(), mGeocoderHandler);
-            } else {
 
-                Log.e("TAG", "Pavan GPS need tobe on ");
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-            }
+            Log.e("TAG", "Pavan GPS need tobe on ");
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, this);
+
         }
         return true;
     }
@@ -232,6 +227,8 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.d(TAG, "Pavan onLocationChanged");
+
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
@@ -240,6 +237,7 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for Activity#requestPermissions for more details.
+            Log.d(TAG, "Pavan onLocationChanged returning ");
             return;
         }
         locationManager.removeUpdates(this);
@@ -267,10 +265,10 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
     String mSubLocality = null;
     String locality = null;
 
-    void goToNextActivity(String City, String Area) {
+    void goToNextActivity(String City, String Area, String locationAddress) {
         Intent intent = new Intent(LauncherActivity.this,LocationActivity.class);
-        intent.putExtra("City", locality);
-        intent.putExtra("Area", mSubLocality);
+        intent.putExtra("City", City);
+        intent.putExtra("Area", Area);
         intent.putExtra("Address", locationAddress);
         startActivity(intent);
         mGeocoderHandler.removeMessages(1);
@@ -296,7 +294,7 @@ public class LauncherActivity extends AppCompatActivity implements LocationListe
                 default:
                     locationAddress = null;
             }
-            goToNextActivity(locality, mSubLocality);
+            goToNextActivity(locality, mSubLocality, locationAddress);
             if(null == locality || null == mSubLocality)
                 Toast.makeText(getApplicationContext(), "Oops! We're unable to fetch your Location", Toast.LENGTH_SHORT).show();
             //Toast.makeText(getApplicationContext(), "Current Location : \n \n" + "City " + locality +"\nArea " + mSubLocality + "\nPostal Code " + postalCode, Toast.LENGTH_LONG).show();

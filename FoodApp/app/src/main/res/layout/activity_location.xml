@@ -79,6 +79,16 @@
             android:paddingRight="50dp"
             android:layout_gravity="center_horizontal"
             android:text="@string/search"
+            android:id="@+id/search_button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/locate"
             android:id="@+id/locate_button" />
 
     </LinearLayout>
