@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.siva.foodapp.data.RestaurantDataModel;
+import com.siva.foodapp.rest.model.Restaurants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,14 +21,14 @@ import java.util.List;
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
 
     public interface ItemClickListener {
-        void onSelectingRestaurant(RestaurantDataModel data);
+        void onSelectingRestaurant(Restaurants data);
     }
 
     private Context mContext;
-    private List<RestaurantDataModel> mDatas;
+    private ArrayList<Restaurants> mDatas;
     private ItemClickListener mItemClickListener;
 
-    public RestaurantAdapter(Context context, List<RestaurantDataModel> datas) {
+    public RestaurantAdapter(Context context, ArrayList<Restaurants> datas) {
         this.mContext = context;
         this.mDatas = datas;
     }
@@ -43,11 +45,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final RestaurantDataModel data = mDatas.get(position);
-        holder.mNameText.setText(data.getRestaurantName());
-        holder.mDeliveryTimeText.setText("Delivery Time : "+data.getTimeToDeliver());
-        holder.mFoodTypeText.setText(data.getDisplayFoodType());
-        holder.mMinOrderText.setText("Min Order : "+data.getMinimumOrder());
+        final Restaurants data = mDatas.get(position);
+        holder.mNameText.setText(data.getName());
+        holder.mLocationText.setText(data.getLocation());
+        holder.mDeliveryTimeText.setText("Delivery Time : "+data.getMindeliverytime());
+        holder.mDeliveryCharge.setText("Delivery charge : "+data.getDeliveryCharge());
+        holder.mRestaurantType.setImageResource(data.getRestaurantType().equals("veg")?
+                R.drawable.restaurant_type_veg:R.drawable.restaurant_type_non_veg);
+        holder.mMinOrderText.setText("Min Order : "+data.getMinDeliveryAmount());
 //        holder.mRestaurantLogo.setImageResource();
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
@@ -65,17 +70,19 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView mNameText,mDeliveryTimeText,mMinOrderText,mFoodTypeText;
-        public ImageView mRestaurantLogo;
+        public TextView mNameText,mDeliveryTimeText,mMinOrderText,mDeliveryCharge,mLocationText;
+        public ImageView mRestaurantLogo,mRestaurantType;
         public CardView mCardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mNameText = (TextView) itemView.findViewById(R.id.restaurant_name);
+            mLocationText = (TextView) itemView.findViewById(R.id.restaurant_location);
             mDeliveryTimeText = (TextView) itemView.findViewById(R.id.restaurant_delivery_time);
             mMinOrderText = (TextView) itemView.findViewById(R.id.restaurant_min_order);
-            mFoodTypeText = (TextView) itemView.findViewById(R.id.restaurant_food_type);
+            mDeliveryCharge = (TextView) itemView.findViewById(R.id.restaurant_delivery_charge);
             mRestaurantLogo = (ImageView) itemView.findViewById(R.id.restaurant_logo);
+            mRestaurantType = (ImageView) itemView.findViewById(R.id.restaurant_type);
             mCardView = (CardView) itemView.findViewById(R.id.restaurant_card_item);
         }
     }

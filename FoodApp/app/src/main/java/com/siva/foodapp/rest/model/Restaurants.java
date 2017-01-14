@@ -72,8 +72,8 @@ public class Restaurants extends PojoModel implements Serializable {
     private String district;
     @JsonProperty("tradeName")
     private String tradeName;
-    @JsonProperty("deliveryChargeApplicable")
-    private String deliveryChargeApplicable;
+    @JsonProperty("deliveryCharge")
+    private int deliveryCharge;
     @JsonProperty("containerChangeApplicable")
     private String containerChangeApplicable;
     @JsonProperty("containerCharge")
@@ -382,14 +382,14 @@ public class Restaurants extends PojoModel implements Serializable {
         this.tradeName = tradeName;
     }
 
-    @JsonProperty("deliveryChargeApplicable")
-    public String getDeliveryChargeApplicable() {
-        return deliveryChargeApplicable;
+    @JsonProperty("deliveryCharge")
+    public int getDeliveryCharge() {
+        return deliveryCharge;
     }
 
-    @JsonProperty("deliveryChargeApplicable")
-    public void setDeliveryChargeApplicable(String deliveryChargeApplicable) {
-        this.deliveryChargeApplicable = deliveryChargeApplicable;
+    @JsonProperty("deliveryCharge")
+    public void setDeliveryCharge(int deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
     }
 
     @JsonProperty("containerChangeApplicable")
@@ -560,7 +560,7 @@ public class Restaurants extends PojoModel implements Serializable {
                 .append(serviceTax, rhs.serviceTax).append(economyRatings, rhs.economyRatings).append(workingDays, rhs.workingDays)
                 .append(convenienceChargePerAmount, rhs.convenienceChargePerAmount).append(discountApplicable, rhs.discountApplicable)
                 .append(discountPercentage, rhs.discountPercentage).append(minDiscountAmount, rhs.minDiscountAmount)
-                .append(district, rhs.district).append(tradeName, rhs.tradeName).append(deliveryChargeApplicable, rhs.deliveryChargeApplicable)
+                .append(district, rhs.district).append(tradeName, rhs.tradeName).append(deliveryCharge, rhs.deliveryCharge)
                 .append(containerChangeApplicable, rhs.containerChangeApplicable).append(containerCharge, rhs.containerCharge)
                 .append(serviceTaxApplicable, rhs.serviceTaxApplicable).append(vatAmountIncluded, rhs.vatAmountIncluded)
                 .append(convenienceChargesApplicable, rhs.convenienceChargesApplicable).append(convenienceCharge, rhs.convenienceCharge)

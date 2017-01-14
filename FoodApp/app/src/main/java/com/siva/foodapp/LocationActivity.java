@@ -52,10 +52,10 @@ public class LocationActivity extends AppCompatActivity {
         String secondKeyName= myIntent.getStringExtra("Area");
         mAddress = myIntent.getStringExtra("Address");
 
-        if((null != secondKeyName) || (null != firstKeyName)) {
+//        if((null != secondKeyName) || (null != firstKeyName)) {
             mCityBox.setText("Bangalore");
             mLocationBox.setText("Basavanagudi");
-        }
+//        }
     }
 
     private void initializeViews() {

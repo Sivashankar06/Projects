@@ -1,6 +1,7 @@
 package com.siva.foodapp.rest.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,9 +9,9 @@ import java.util.List;
  */
 public class RestaurantDetails implements Serializable {
 
-    private List<Restaurants> restaurants;
+    private ArrayList<Restaurants> restaurants;
 
-    public List<Restaurants> getRestaurants() {
+    public ArrayList<Restaurants> getRestaurants() {
         return restaurants;
     }
 }

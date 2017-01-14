@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.siva.foodapp.data.RestaurantDataModel;
 import com.siva.foodapp.dummy.ResponseMock;
+import com.siva.foodapp.rest.model.Restaurants;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class RestaurantsActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
 
     private RecyclerView mRestaurantListView;
-    private ArrayList<RestaurantDataModel> mRestaurantDataModels;
+    private ArrayList<Restaurants> mRestaurants;
     private RestaurantAdapter mRestaurantAdapter;
 
     private NavigationView mNavigationView;
@@ -43,12 +44,12 @@ public class RestaurantsActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         mRestaurantListView = (RecyclerView) findViewById(R.id.restaurant_list);
-        mRestaurantDataModels = ResponseMock.getRestaurantsDetails();
-        mRestaurantAdapter = new RestaurantAdapter(this, mRestaurantDataModels);
+        mRestaurants = ((FoodApplication)getApplicationContext()).getRestaurantDetails().getRestaurants();
+        mRestaurantAdapter = new RestaurantAdapter(this, mRestaurants);
         mRestaurantAdapter.setItemClickListener(new RestaurantAdapter.ItemClickListener() {
             @Override
-            public void onSelectingRestaurant(RestaurantDataModel data) {
-                Toast.makeText(RestaurantsActivity.this,"Selected : "+data.getRestaurantName(),Toast.LENGTH_SHORT).show();
+            public void onSelectingRestaurant(Restaurants data) {
+                Toast.makeText(RestaurantsActivity.this,"Selected : "+data.getName(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RestaurantsActivity.this, RestaurantDetailsActivity.class);
                 intent.putExtra(RestaurantDetailsActivity.EXTRA,data);
                 startActivity(intent);
