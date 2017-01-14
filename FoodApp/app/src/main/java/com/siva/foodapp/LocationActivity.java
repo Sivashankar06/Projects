@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,9 +16,19 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
 import com.siva.foodapp.dummy.ResponseMock;
+import com.siva.foodapp.rest.model.RestaurantDetails;
+import com.siva.foodapp.rest.model.Restaurants;
+
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class LocationActivity extends AppCompatActivity {
 
+    private final String TAG = LocationActivity.class.getSimpleName();
     private TextInputLayout mCityHolder,mLocationHolder;
     private MultiAutoCompleteTextView mCityBox,mLocationBox;
     private Button mLocateButton, mSearchButton;
@@ -42,8 +53,8 @@ public class LocationActivity extends AppCompatActivity {
         mAddress = myIntent.getStringExtra("Address");
 
         if((null != secondKeyName) || (null != firstKeyName)) {
-            mLocationBox.setText(secondKeyName);
-            mCityBox.setText(firstKeyName);
+            mCityBox.setText("Bangalore");
+            mLocationBox.setText("Basavanagudi");
         }
     }
 
@@ -61,9 +72,7 @@ public class LocationActivity extends AppCompatActivity {
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LocationActivity.this,RestaurantsActivity.class);
-                intent.putExtra("Address", mAddress);
-                startActivity(intent);
+                searchRestaurants(mCityBox.getText().toString(),mLocationBox.getText().toString());
             }
         });
 
@@ -117,5 +126,29 @@ public class LocationActivity extends AppCompatActivity {
             return;
         }
         mLocationAdapter.addAll(ResponseMock.getAvailableShops(city));
+    }
+
+    private void searchRestaurants(String city,String location){
+        Call<RestaurantDetails> queryRestaurant = ((FoodApplication)getApplicationContext()).getRestApi()
+                .getRestaurantDetails(city,location);
+        queryRestaurant.enqueue(new Callback<RestaurantDetails>() {
+            @Override
+            public void onResponse(Response<RestaurantDetails> response, Retrofit retrofit) {
+                if(response.isSuccess()){
+                    Log.d(TAG,response.body().toString());
+                    ((FoodApplication)getApplicationContext()).setRestaurantDetails(response.body());
+                    Intent intent = new Intent(LocationActivity.this,RestaurantsActivity.class);
+                    intent.putExtra("Address", mAddress);
+                    startActivity(intent);
+                }else{
+                    Log.d(TAG,response.errorBody()+" : Error Body");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

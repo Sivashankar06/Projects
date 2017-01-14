@@ -29,6 +29,4 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
     }
-
-
 }
